@@ -2,16 +2,16 @@ grammar ShellX;
 
 // Parser Rules
 program: SHELLX (command | structure | assignment)* EOF;
-command: lsCommand      #ls
-       | pwdCommand     #pwd
-       | catCommand     #cat
-       | mvCommand      #mv
-       | touchCommand   #touch
-       | echoCommand    #echo
-       | rmCommand      #rm
-       | mkdirCommand   #mkdir
-       | grepCommand    #grep
-       | cpCommand      #cp
+command: lsCommand      
+       | pwdCommand     
+       | catCommand     
+       | mvCommand     
+       | touchCommand  
+       | echoCommand    
+       | rmCommand      
+       | mkdirCommand   
+       | grepCommand    
+       | cpCommand      
        ;
 lsCommand: LS (ARG | VAR)* ;
 pwdCommand: PWD (ARG | VAR)* ;

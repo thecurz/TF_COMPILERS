@@ -1,5 +1,10 @@
 #include "antlr4-runtime.h"
 #include "tree/ParseTree.h"
+#include "CommonTokenStream.h"
+#include "ANTLRInputStream.h"
+#include "headers/ShellXBaseVisitor.h"
+#include "headers/ShellXLexer.h"
+#include "headers/ShellXVisitorImpl.h"
 
 int32_t main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -17,7 +22,17 @@ int32_t main(int argc, char* argv[]) {
     while (std::getline(inputFile, line)) {
         std::cout << line << std::endl;
     }
-
     inputFile.close();
+
+    antlr4::ANTLRInputStream input(line);
+
+    ShellXLexer lexer(&input);
+    antlr4::CommonTokenStream tokens(&lexer);
+    ShellXParser parser(&tokens);
+
+    antlr4::tree::ParseTree* tree = parser.program();
+    ShellXVisitorImpl visitor;
+    visitor.visit(tree);
+
     return 0;
 }
