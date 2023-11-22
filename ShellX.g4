@@ -2,7 +2,27 @@ grammar ShellX;
 
 // Parser Rules
 program: SHELLX (command | structure | assignment)* EOF;
-command: (LS | PWD | CAT | MV | TOUCH | ECHO | RM | MKDIR | GREP | CP) (ARG | VAR)*;
+command: lsCommand      #ls
+       | pwdCommand     #pwd
+       | catCommand     #cat
+       | mvCommand      #mv
+       | touchCommand   #touch
+       | echoCommand    #echo
+       | rmCommand      #rm
+       | mkdirCommand   #mkdir
+       | grepCommand    #grep
+       | cpCommand      #cp
+       ;
+lsCommand: LS (ARG | VAR)* ;
+pwdCommand: PWD (ARG | VAR)* ;
+catCommand: CAT (ARG | VAR)* ;
+mvCommand: MV (ARG | VAR)* ;
+touchCommand: TOUCH (ARG | VAR)* ;
+echoCommand: ECHO (ARG | VAR)* ;
+rmCommand: RM (ARG | VAR)* ;
+mkdirCommand: MKDIR (ARG | VAR)* ;
+grepCommand: GREP (ARG | VAR)* ;
+cpCommand: CP (ARG | VAR)* ;
 structure: (FOR | WHILE | IF | ELIF) '(' ARG ')' command;
 assignment: VAR '=' ARG;
 
