@@ -2,8 +2,8 @@
 #include "CommonTokenStream.h"
 #include "ShellXVisitorImpl.h"
 #include "antlr4-runtime.h"
-#include "headers/ShellXBaseVisitor.h"
-#include "headers/ShellXLexer.h"
+#include "src/ShellXBaseVisitor.h"
+#include "src/ShellXLexer.h"
 #include "tree/ParseTree.h"
 
 int32_t main(int argc, char *argv[]) {
@@ -19,9 +19,10 @@ int32_t main(int argc, char *argv[]) {
   }
 
   std::string line;
-  while (std::getline(inputFile, line)) {
-    std::cout << line << std::endl;
-  }
+  // while (std::getline(inputFile, line)) {
+  //   std::cout << line << std::endl;
+  // }
+  std::getline(inputFile, line);
   inputFile.close();
 
   antlr4::ANTLRInputStream input(line);
@@ -32,6 +33,7 @@ int32_t main(int argc, char *argv[]) {
 
   antlr4::tree::ParseTree *tree = parser.program();
   ShellXVisitorImpl visitor;
+  // std::cout << "tree:\n" << tree->toStringTree(&parser) << std::endl;
   visitor.visit(tree);
 
   return 0;
