@@ -42,3 +42,7 @@ Se han considerado los siguientes comandos del sistema a ser ejecutados por el s
     * ANTLRI es una variable de entorno.
         * Ejemplo: `/usr/local/include/antlr4-runtime`
         * También puede ser reemplazado por el directorio en sí directamente
+
+
+# Video
+[Presentación](https://youtu.be/YQY8BbYKArA)
