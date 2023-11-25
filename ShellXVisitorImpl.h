@@ -18,6 +18,7 @@ class ShellXVisitorImpl : public ShellXBaseVisitor {
   std::any visitWhileLoop(ShellXParser::WhileLoopContext *ctx) override;
   std::any
   visitIfElseStatement(ShellXParser::IfElseStatementContext *ctx) override;
+  bool ShellXVisitorImpl::evaluateCondition(const std::string& condition) override;
   std::any visitAssignment(ShellXParser::AssignmentContext *ctx) override;
   std::any visitVariableAssignment(
       ShellXParser::VariableAssignmentContext *ctx) override;
