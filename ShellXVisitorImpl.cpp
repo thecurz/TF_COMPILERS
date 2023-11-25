@@ -4,10 +4,6 @@
 #include <string>
 std::any visitChildren(antlr4::tree::ParseTree *tree) { return 0; }
 std::any ShellXVisitorImpl::visitProgram(ShellXParser::ProgramContext *ctx) {
-  // for (auto cmd : ctx->line()) {
-  //   std::cout << cmd->statement()->command()->lsCommand()->getText()
-  //             << std::endl;
-  // }
 
   return visitChildren(ctx);
 }
@@ -490,10 +486,22 @@ ShellXVisitorImpl::visitCpCommand(ShellXParser::CpCommandContext *ctx) {
 
 std::any
 ShellXVisitorImpl::visitStructure(ShellXParser::StructureContext *ctx) {
+  auto forloop = ctx->forLoop();
+  // if (forloop != nullptr) {
+  //   visitForLoop(forloop);
+  // }
   return visitChildren(ctx);
 }
 
 std::any ShellXVisitorImpl::visitForLoop(ShellXParser::ForLoopContext *ctx) {
+  int lstart = stoi(ctx->range()->INT()[0]->getText());
+  int llast = stoi(ctx->range()->INT()[1]->getText());
+  auto line = ctx->forInner()->line();
+  for (int i = lstart; i < llast; i++) {
+    // std::cout << i << std::endl;
+    for (auto line : line)
+      visitLine(line);
+  }
   return visitChildren(ctx);
 }
 

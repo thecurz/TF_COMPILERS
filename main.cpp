@@ -19,13 +19,15 @@ int32_t main(int argc, char *argv[]) {
   }
 
   std::string line;
-  // while (std::getline(inputFile, line)) {
-  //   std::cout << line << std::endl;
-  // }
-  std::getline(inputFile, line);
+  std::stringstream fileContent;
+  while (std::getline(inputFile, line)) {
+    fileContent << line << "\n";
+  }
+  std::string wholeFile = fileContent.str();
   inputFile.close();
 
-  antlr4::ANTLRInputStream input(line);
+  // std::cout << "wholeFile: " << wholeFile << std::endl;
+  antlr4::ANTLRInputStream input(wholeFile);
 
   ShellXLexer lexer(&input);
   antlr4::CommonTokenStream tokens(&lexer);
