@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include "exprtk.hpp"
+
 std::any visitChildren(antlr4::tree::ParseTree *tree) { return 0; }
 std::any ShellXVisitorImpl::visitProgram(ShellXParser::ProgramContext *ctx) {
 
@@ -507,12 +509,53 @@ std::any ShellXVisitorImpl::visitForLoop(ShellXParser::ForLoopContext *ctx) {
 
 std::any
 ShellXVisitorImpl::visitWhileLoop(ShellXParser::WhileLoopContext *ctx) {
+  std::string condition = ctx->expr()->getText();
+  while (evaluateCondition(condition)) {
+      for (auto line : ctx->whileInner()->line()) {
+          visitLine(line);
+      }
+  }
   return visitChildren(ctx);
 }
 
 std::any ShellXVisitorImpl::visitIfElseStatement(
     ShellXParser::IfElseStatementContext *ctx) {
+std::string condition = ctx->expr()->getText();
+
+  if (evaluateCondition(condition)) {
+    for (auto line : ctx->ifBlock()->line()) {
+        visitLine(line);
+    }
+  }
+  else if (ctx->elseBlock() != nullptr) {
+    for (auto line : ctx->elseBlock()->line()) {
+        visitLine(line);
+    }
+  }
   return visitChildren(ctx);
+}
+
+bool ShellXVisitorImpl::evaluateCondition(const std::string& condition) {
+    typedef exprtk::symbol_table<double> symbol_table_t;
+    typedef exprtk::expression<double> expression_t;
+    typedef exprtk::parser<double> parser_t;
+
+    symbol_table_t symbol_table;
+    expression_t expression;
+    parser_t parser;
+
+    symbol_table.add_constants();
+    symbol_table.add_variable("i", 0.0);
+
+    expression.register_symbol_table(symbol_table);
+
+    if (!parser.compile(condition, expression)) {
+        std::cerr << "Error al compilar la condición: " << condition << std::endl;
+        return false;
+    }
+
+    double result = expression.value();
+    return static_cast<bool>(result);
 }
 
 std::any
