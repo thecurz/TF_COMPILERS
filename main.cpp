@@ -7,37 +7,49 @@
 #include "tree/ParseTree.h"
 
 int32_t main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Por favor, ingrese un archivo como input." << std::endl;
-    return 1;
-  }
+  // if (argc < 2) {
+  //   std::cerr << "Por favor, ingrese un archivo como input." << std::endl;
+  //   return 1;
+  // }
 
   std::ifstream inputFile(argv[1]);
-  if (!inputFile) {
-    std::cerr << "Error al leer el archivo: " << argv[1] << std::endl;
-    return 1;
+  bool noinput = false;
+  if (argc >= 2) {
+    if (!inputFile) {
+      std::cerr << "Error al leer el archivo: " << argv[1] << std::endl;
+      // continue reading
+    }
+  } else {
+    noinput = true;
   }
 
-  std::string firstLine;
-  std::getline(inputFile, firstLine);
+  std::string line;
+  std::stringstream fileContent;
+  if (noinput) {
+    std::cout << "$ShellX>";
+  }
 
-  if (firstLine == "input.txt") {
-      std::cout << "Modo interactivo activado. Ingrese comandos:" << std::endl;
+  while (std::getline((inputFile.is_open() ? inputFile : std::cin), line)) {
+    // while (std::getline(inputFile, line)) {
+    std::stringstream currentLine;
+    currentLine << line << "\n";
+    fileContent << currentLine.str();
+    if (noinput) {
+      antlr4::ANTLRInputStream input(currentLine.str());
+
+      ShellXLexer lexer(&input);
+      antlr4::CommonTokenStream tokens(&lexer);
+      ShellXParser parser(&tokens);
+
+      antlr4::tree::ParseTree *tree = parser.program();
       ShellXVisitorImpl visitor;
-      while (true) {
-          std::string command;
-          std::getline(std::cin, command);
-
-          if (command == "exit") { break; }
-
-          antlr4::ANTLRInputStream input(command);
-          ShellXLexer lexer(&input);
-          antlr4::CommonTokenStream tokens(&lexer);
-          ShellXParser parser(&tokens);
-
-          antlr4::tree::ParseTree* tree = parser.program();
-          visitor.visit(tree);
-      }
+      // std::cout << "tree:\n" << tree->toStringTree(&parser) << std::endl;
+      visitor.visit(tree);
+      std::cout << "\n$ShellX>";
+    }
+  }
+  if (noinput) {
+    return 0;
   }
 
   else {
