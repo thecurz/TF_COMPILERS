@@ -1,7 +1,7 @@
 grammar ShellX;
 
 // Parser Rules
-program: SHELLX (command | structure | assignment)* EOF;
+program: (command | structure | assignment)* EOF;
 command: lsCommand      
        | pwdCommand     
        | catCommand     
@@ -27,7 +27,7 @@ structure: (FOR | WHILE | IF | ELIF) '(' ARG ')' command;
 assignment: VAR '=' ARG;
 
 // Lexer Rules
-SHELLX: '#shellx';
+PARAMS : ~[\r\n]+;
 LS: 'ls';
 PWD: 'pwd';
 CAT: 'cat';
