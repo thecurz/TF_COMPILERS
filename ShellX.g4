@@ -68,8 +68,8 @@ rmCommand     : RM (flags)? (ARG | VAR)* NEWLINE?;
 mkdirCommand  : MKDIR (flags)? (ARG | VAR)* NEWLINE?;
 grepCommand   : GREP (flags)? (ARG | VAR)* NEWLINE?;
 cpCommand     : CP (flags)? (ARG | VAR)* NEWLINE?;
-assignment    : VAR EQ ARG;
-variableAssignment: VAR EQ ENV_VAR;
+assignment    : ARG EQ expr NEWLINE?;
+variableAssignment: VAR EQ ENV_VAR NEWLINE?;
 range         : LBRAC INT INB INT RBRAC;
 flags         : (FLAG WS?)+;
 
