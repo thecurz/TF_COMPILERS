@@ -3,9 +3,31 @@
 # Shell X
 
 ## Lenguaje básico de scripting
-con estructuras repetitivas, condicionales y selectivas, variables ylistas.
+Con estructuras repetitivas, condicionales y selectivas, variables ylistas.
 
-## Ejecutar en modo “headless” un script
+* Ejemplo de lenguaje
+    ```bash
+    func fib(x):
+        if x < 3 :
+            1
+        else:
+            fib(x-1) + fib(x-2)
+
+    fib(40)
+    10+10
+    a = 10 + 10
+    cp file1 file2
+    ```
+    * Árbol Sintáctico resultante <br/>
+    ![AST](AST.png "AST")
+
+* Ejemplo de estructura repetitiva
+```bash
+for n in {1..10}
+do:
+echo hola
+:done
+```
 
 ## Tratamiento de variables de entorno
 * pwd : indica el directorio actual `pwdCommand: PWD NEWLINE?`
@@ -23,14 +45,11 @@ Se han considerado los siguientes comandos del sistema a ser ejecutados por el s
 * cp : copia un archivo o más `CP (flags)? (ARG | VAR)* NEWLINE?`;
 
 ## Modo interactivo
-, el cual es el modo principal, permite mostrar un prompt definido en lavariable PS1 o PROMPT
-
-## Característica adicional
- a su criterio, extensión del lenguaje, característica interactivacomo autosugestions, manejo de colores, etc
-
+<!-- , el cual es el modo principal, permite mostrar un prompt definido en lavariable PS1 o PROMPT -->
+* Se actuva al invocar ./a.out sin un archivo al lado
+* Interpreta comandos de sistema, acceso a variables de entorno y operaciones simples.
 
 # Ejecución:
-
 * Requiere instalación de [antlr4 Java runtime](https://www.antlr.org/)
 * Generar las librerías:
     ```bash
