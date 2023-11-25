@@ -1,4 +1,6 @@
 #include "src/ShellXBaseVisitor.h"
+#include "src/ShellXParser.h"
+#include <any>
 
 class ShellXVisitorImpl : public ShellXBaseVisitor {
   std::any visitProgram(ShellXParser::ProgramContext *ctx) override;
@@ -18,9 +20,11 @@ class ShellXVisitorImpl : public ShellXBaseVisitor {
   std::any visitWhileLoop(ShellXParser::WhileLoopContext *ctx) override;
   std::any
   visitIfElseStatement(ShellXParser::IfElseStatementContext *ctx) override;
-  bool ShellXVisitorImpl::evaluateCondition(const std::string& condition) override;
+  // bool ShellXVisitorImpl::evaluateCondition(const std::string& condition) override;
   std::any visitAssignment(ShellXParser::AssignmentContext *ctx) override;
   std::any visitVariableAssignment(
       ShellXParser::VariableAssignmentContext *ctx) override;
   std::any visitFlags(ShellXParser::FlagsContext *ctx) override;
+  std::any visitCode(ShellXParser::CodeContext *ctx) override;
+  std::any visitExpr(ShellXParser::ExprContext *ctx) override;
 };
