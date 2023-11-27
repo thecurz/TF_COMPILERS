@@ -6,6 +6,7 @@
 Con estructuras repetitivas, condicionales y selectivas, variables ylistas.
 
 * Ejemplo de lenguaje
+    * Usar tab para la función. (En Markdown se está traduciendo a cuatro espacios).
     ```bash
     func fib(x):
         if x < 3 :
